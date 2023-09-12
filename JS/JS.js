@@ -3,15 +3,16 @@
 window.addEventListener('scroll', function() {
   const heroBanner = document.getElementById('hero-banner');
   const overlay = heroBanner.querySelector('.overlay');
-  
-  // Calculate the opacity based on scroll position
   const opacity = Math.min(1, window.scrollY / (heroBanner.offsetHeight * 0.8));
-  
-  //Update the overlay's opacity
   overlay.style.opacity = opacity;
 });
 
-
+// our studio effect
+const ourStudio = document.getElementById("our-studio-img");
+window.addEventListener("scroll", () => {
+  const scrollPos = window.scrollY;
+  ourStudio.style.transform = `translate3d(0, calc(-30vh + ${scrollPos * 0.3}px), 0)`;
+});
 
 
 // workshop-banner effect
@@ -20,6 +21,31 @@ window.addEventListener("scroll", () => {
   const scrollPos = window.scrollY;
   workshopBanner.style.transform = `translate3d(0, calc(-50vh + ${scrollPos * 0.3}px), 0)`;
 });
+
+
+// contact-banner effect 
+const contactUsBannerImg = document.getElementById("contact-us-banner-img");
+const contactUsBanner = document.getElementById('contact-us-banner'); // Container element
+
+window.addEventListener("scroll", () => {
+  const scrollPos = window.scrollY;
+
+  const maxScroll = contactUsBannerImg.offsetHeight * 0.8;
+  const opacity = Math.min(1, scrollPos / maxScroll);
+  
+  let overlay = contactUsBanner.querySelector('.overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.classList.add('overlay');
+    contactUsBanner.appendChild(overlay);
+  }
+  overlay.style.opacity = opacity;
+  contactUsBannerImg.style.opacity = 1 - opacity; 
+
+  contactUsBannerImg.style.transform = `translate3d(0, calc( ${scrollPos * 0.3}px), 0)`;
+});
+
+
 
 
 // testimonial scrolling effect
@@ -95,17 +121,28 @@ carousel.addEventListener("scroll", infiniteScroll);
 wrapper.addEventListener("mouseenter", () => clearTimeout(timeoutId));
 wrapper.addEventListener("mouseleave", autoPlay);
 
+// Fetch and insert the header
+    fetch('/includes/header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-wrapper').innerHTML = data; });
 
-//mobile navbar
+// Fetch and insert the footer
+    fetch('/includes/footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-wrapper').innerHTML = data; 
+        });
 
-const mobileMenu = document.getElementById('mobile-menu');
-const navbar = document.getElementById('navbar')
 
-if (mobileMenu){
-    mobileMenu.addEventListener('click', () => {
-        navbar.classList.toggle('active');
-    });
-};
+
+
+
+
+
+
+
+
 
 
 
